@@ -7,7 +7,7 @@ const BASE_URL = 'https://api.thecatapi.com/v1';
 const API_KEY = axios.defaults.headers.common['x-api-key'];
 
 function fetchBreeds() {
-  return fetch(`${BASE_URL}/breeds?api_key=${API_KEY}`)
+  return fetch(`${BASE_URL}/breeds1?api_key=${API_KEY}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(response.status);
