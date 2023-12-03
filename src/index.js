@@ -11,8 +11,19 @@ loader.classList.add('is-hidden');
 error.classList.add('is-hidden');
 divCatInfo.classList.add('is-hidden');
 let arrayBreedsId = [];
-// додати слухач подій на зміну вибору породи
+let errorP = false; //прапорець
+// слухач подій на зміну вибору породи
 selector.addEventListener('change', onSelectBreed);
+document.addEventListener('click', onClickOutsideSelector);
+// слухач подій на клік за межами селектора
+function onClickOutsideSelector(event) {
+  // перевірити чи клік був за межами селектора
+  if (!selector.contains(event.target) && !errorP) {
+    onFetchError();
+    errorP = true;
+  }
+  document.removeEventListener('click', onClickOutsideSelector);
+}
 function onSelectBreed(event) {
   const breedId = event.currentTarget.value;
   if (!breedId) {
@@ -23,7 +34,6 @@ function onSelectBreed(event) {
   divCatInfo.classList.add('is-hidden');
   fetchCatByBreed(breedId)
     .then(data => {
-      // приховати loader, показати selector
       loader.classList.add('is-hidden');
       selector.classList.remove('is-hidden');
       // вдобразити інформацію про кота
@@ -57,13 +67,13 @@ fetchBreeds()
   .catch(onFetchError);
 // функція для обробки помилок
 function onFetchError() {
-  selector.classList.remove('is-hidden');
+  selector.classList.add('is-hidden');
   loader.classList.add('is-hidden');
   // вивести повідомлення про помилку
   Notiflix.Notify.failure(
     'Oops! Something went wrong! Try reloading the page or select another cat breed!',
     {
-      position: 'top-center',
+      position: 'center-top',
       timeout: 5000,
       width: '400px',
       fontSize: '24px',
