@@ -73,7 +73,7 @@ function onFetchError() {
   Notiflix.Notify.failure(
     'Oops! Something went wrong! Try reloading the page or select another cat breed!',
     {
-      position: 'center-top',
+      position: 'center-center',
       timeout: 5000,
       width: '400px',
       fontSize: '24px',
